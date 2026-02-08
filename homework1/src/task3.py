@@ -95,5 +95,6 @@ if __name__ == "__main__":
     print("\nDemonstration of for loop control structures by printing the first 10 primes:")
     print_first_n_primes(10)
 
-    print("\nDemostration of while loop control structures by summing all values from 1 to 100:")
-    print(f"Summation from 1 to 100 = {sum_one_to_n(100)}")
+    print("\nDemonstration of while loop control structures by summing all values from 1 to 100:")
+    # added new line for multiple files being run at once
+    print(f"Summation from 1 to 100 = {sum_one_to_n(100)}\n") 

@@ -16,3 +16,4 @@ if __name__ == "__main__":
 
     print("Demonstration: Console Output - By Jeffrey Kotz")
     hello_world()
+    print() # added new line for multiple files being run at once

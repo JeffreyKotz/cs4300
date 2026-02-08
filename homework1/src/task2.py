@@ -140,4 +140,6 @@ if __name__ == "__main__":
     print(f"Conditional operations: first_value is true, select -3 or 4: {bool_select(-3, 4, True)}")
     print(f"Conditional operations: first_value is false, select -3 or 4: {bool_select(-3, 4, False)}")
     print(f"Conditional comparison: 2 == 3: {bool_equals(2, 3)}")
-    print(f"Conditional comparison: 5 == 5: {bool_equals(5, 5)}")
+    # added new line for multiple files being run at once
+    print(f"Conditional comparison: 5 == 5: {bool_equals(5, 5)}\n")
+
