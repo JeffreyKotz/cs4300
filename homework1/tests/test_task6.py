@@ -10,7 +10,7 @@ import pytest
 from task6 import count_words_in_file
 
 # Parameterized test, with a set of a file path and an expected word count
-@pytest.mark.parametrize("file_path, expected_word_count", [("task6_read_me.txt", 104)])
+@pytest.mark.parametrize("file_path, expected_word_count", [("task6_read_me.txt", 104), ("word_count_test.txt", 10)])
 def test_count_words_in_file(file_path, expected_word_count):
     """Test that the number of words in a file is properly counted.
 
