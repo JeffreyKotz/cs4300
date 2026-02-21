@@ -77,10 +77,14 @@ class SeatViewSet(viewsets.ModelViewSet):
         seat = self.get_object()
         if not seat.booking_status:
             seat.booking_status = True
-            response = Response({'status': 'seat booked'})
+            response = Response(data={'status': 'seat booked'},
+                                status=status.HTTP_200_OK,
+                                )
             seat.save()
         else:
-            response = Response({'status': 'seat unavailable'})
+            response = Response(data={'status': 'seat unavailable'},
+                                status=status.HTTP_400_BAD_REQUEST,
+                                )
 
         return response
 
@@ -136,20 +140,35 @@ class BookingViewSet(viewsets.ModelViewSet):
                 if not seat.booking_status:
                     seat.booking_status = True
                     seat.save()
-                    serializer.create(serializer.validated_data)
 
-                    # Successful creation return code 201!
-                    response = Response(status=status.HTTP_201_CREATED)
+                    booking = serializer.save()
+                    # Successful creation of a booking return code 201!
+                    # I really wanted to find a better way to do this,
+                    # but I re-serialized the de-serialized data that
+                    # created the booking.
+                    response = Response(data=BookingSerializer(booking,
+                                                               context={'request': request}
+                                                               ).data,
+                                        status=status.HTTP_201_CREATED,
+                                        )
+
                 else:
-                    response = Response({'status': 'Seat Unavailable'})
+                    response = Response(data={'status': 'Seat Unavailable'},
+                                        status=status.HTTP_400_BAD_REQUEST,
+                                        )
             else:
-                response = Response({'status': f'Booking on {booking_date} is '
-                                     f'before movie is released '
-                                     f'on {movie.release_date}'})
+                response = Response(data={'status':
+                                          f'Booking on {booking_date} is '
+                                          f'before movie is released '
+                                          f'on {movie.release_date}'
+                                          },
+                                    status=status.HTTP_400_BAD_REQUEST,
+                                    )
         return response
 
     def destroy(self, request, pk):
-        """Overridden destroy method to remove booking's claim of seat after it's gone
+        """Overridden destroy method to remove booking's claim of seat after
+        it is gone
 
         Args:
             request (HttpRequest): request to destroy seat
