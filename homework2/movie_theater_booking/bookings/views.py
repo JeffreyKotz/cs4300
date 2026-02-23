@@ -8,7 +8,9 @@ from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action, renderer_classes
 from rest_framework.response import Response
 from rest_framework.renderers import (TemplateHTMLRenderer,
-                                      JSONRenderer)
+                                      BrowsableAPIRenderer,
+                                      JSONRenderer,
+                                      )
 
 from django.shortcuts import get_object_or_404
 
@@ -28,7 +30,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
 
     # Template used by view
     template_name = 'bookings/movie_list.html'

@@ -22,7 +22,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from bookings.views import MovieViewSet, SeatViewSet, BookingViewSet
 
-router = SimpleRouter()
+router = SimpleRouter(trailing_slash=False)
 router.register(r'movies', MovieViewSet)
 router.register(r'seats', SeatViewSet)
 router.register(r'bookings', BookingViewSet)
@@ -37,7 +37,7 @@ api_urlpatterns = [
 # Require all api interactions through json formats
 api_urlpatterns = format_suffix_patterns(api_urlpatterns,
                                          suffix_required=True,
-                                         allowed=['json'],
+                                         allowed=['json', 'api'],
                                          )
 
 urlpatterns = [
