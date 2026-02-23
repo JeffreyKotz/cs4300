@@ -10,8 +10,9 @@ router = DefaultRouter()
 app_name = "app"
 urlpatterns = [
     path("movies",
-         views.MovieViewSet.as_view({'get': 'movie_list'}),
+         views.MovieViewSet.as_view({'get': 'list'}),
          name="movie_list")
 ]
 
+# The app will only be viewed through html
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['html'])

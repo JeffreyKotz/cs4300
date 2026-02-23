@@ -5,7 +5,7 @@ This file defines Views for the Movie Theater Booking App
 
 # from django.shortcuts import render
 from rest_framework import permissions, viewsets, status
-from rest_framework.decorators import action, api_view, renderer_classes
+from rest_framework.decorators import action, renderer_classes
 from rest_framework.response import Response
 from rest_framework.renderers import (TemplateHTMLRenderer,
                                       JSONRenderer)
@@ -26,16 +26,16 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]
+
+    # Specify to only use JSON and Template renderer
     renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
+
+    # Template used by view
     template_name = 'bookings/movie_list.html'
 
     # As MovieViewSet is a derived class from ModelViewSet it implement: list,
     # create, retrieve, update, partial_update, and destroy by default
     # No additional work is needed CRUD operations are built in
-
-    def movie_list(self, request):
-        response = self.list(request)
-        return Response(response.data)
 
 
 class SeatViewSet(viewsets.ModelViewSet):
