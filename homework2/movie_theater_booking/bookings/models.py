@@ -36,7 +36,7 @@ class Seat(models.Model):
         Returns:
             str: human readable description of seat
         """
-        return f"seat #{self.seat_number}, Booked: {self.booking_status}"
+        return f"Seat #{self.seat_number}, Booked: {self.booking_status}"
 
 
 class Booking(models.Model):

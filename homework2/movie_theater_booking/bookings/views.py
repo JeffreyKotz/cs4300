@@ -5,8 +5,10 @@ This file defines Views for the Movie Theater Booking App
 
 # from django.shortcuts import render
 from rest_framework import permissions, viewsets, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, renderer_classes
 from rest_framework.response import Response
+from rest_framework.renderers import (TemplateHTMLRenderer,
+                                      JSONRenderer)
 
 from django.shortcuts import get_object_or_404
 
@@ -24,10 +26,16 @@ class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [permissions.AllowAny]
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
+    template_name = 'bookings/movie_list.html'
 
     # As MovieViewSet is a derived class from ModelViewSet it implement: list,
     # create, retrieve, update, partial_update, and destroy by default
     # No additional work is needed CRUD operations are built in
+
+    def movie_list(self, request):
+        response = self.list(request)
+        return Response(response.data)
 
 
 class SeatViewSet(viewsets.ModelViewSet):
@@ -141,16 +149,9 @@ class BookingViewSet(viewsets.ModelViewSet):
                     seat.booking_status = True
                     seat.save()
 
-                    booking = serializer.save()
-                    # Successful creation of a booking return code 201!
-                    # I really wanted to find a better way to do this,
-                    # but I re-serialized the de-serialized data that
-                    # created the booking.
-                    response = Response(data=BookingSerializer(booking,
-                                                               context={'request': request}
-                                                               ).data,
-                                        status=status.HTTP_201_CREATED,
-                                        )
+                    # Booking is successfully made, call superclass create
+                    # and give it's returned response as the response
+                    response = super(BookingViewSet, self).create(request)
 
                 else:
                     response = Response(data={'status': 'Seat Unavailable'},
@@ -187,11 +188,9 @@ class BookingViewSet(viewsets.ModelViewSet):
             seat.booking_status = False
             seat.save()
 
-            # Deleete booking
-            booking.delete()
-
-            # Return 204 on successful deletion
-            response = Response(status=status.HTTP_204_NO_CONTENT)
+            # Deleete booking and prepare
+            # return response given by super class destroy method
+            response = super(BookingViewSet, self).destroy(request, pk)
         except Booking.DoesNotExist:
             # object not found return 404
             response = Response(status=status.HTTP_404_NOT_FOUND)
