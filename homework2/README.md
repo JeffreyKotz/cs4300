@@ -55,3 +55,20 @@ From cs4300/homework2/movie_theater_booking
 ```
 python manage.py runserver 0.0.0.0:3000
 ```
+
+## How to use API
+API usage requires specification of format with '.json', or '.api' for graphical API interface
+
+Api end points are:
+```
+/api/movies.json/
+/api/seat.json/
+/api/bookings.json/
+```
+
+For interactive view:
+```
+/api/movies.api/
+/api/seat.api/
+/api/bookings.api/
+```

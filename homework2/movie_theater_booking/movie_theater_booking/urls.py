@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import SimpleRouter, DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from bookings.views import MovieViewSet, SeatViewSet, BookingViewSet
@@ -36,7 +36,6 @@ api_urlpatterns = [
 
 # Require all api interactions through json formats
 api_urlpatterns = format_suffix_patterns(api_urlpatterns,
-                                         suffix_required=True,
                                          allowed=['json', 'api'],
                                          )
 

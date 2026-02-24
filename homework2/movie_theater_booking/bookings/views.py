@@ -12,7 +12,7 @@ from rest_framework.renderers import (TemplateHTMLRenderer,
                                       JSONRenderer,
                                       )
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 from bookings.models import Movie, Seat, Booking
 from bookings.serializers import (MovieSerializer,
@@ -20,6 +20,10 @@ from bookings.serializers import (MovieSerializer,
                                   BookingSerializer)
 
 # Create your views here.
+
+
+def base_view(request):
+    return render(request, 'bookings/base.html')
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -32,7 +36,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     # Specify to only use JSON and Template renderer
     renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
 
-    # Template used by view
+    # Template used by view set
     template_name = 'bookings/movie_list.html'
 
     # As MovieViewSet is a derived class from ModelViewSet it implement: list,
@@ -46,6 +50,12 @@ class SeatViewSet(viewsets.ModelViewSet):
     queryset = Seat.objects.all()
     serializer_class = SeatSerializer
     permission_classes = [permissions.AllowAny]
+
+    # Specify to only use JSON and Template renderer
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
+
+    # Template used by view set
+    template_name = 'bookings/seat_booking.html'
 
     # it is a GET operation, applied to all seats so detail=False
     @action(detail=False, methods=["GET"])
@@ -105,6 +115,12 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [permissions.AllowAny]
+
+    # Specify to only use JSON and Template renderer
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
+
+    # Template used by view set
+    template_name = 'bookings/booking_history.html'
 
     @action(detail=False, methods=["GET"])
     def booking_history(self, request):
