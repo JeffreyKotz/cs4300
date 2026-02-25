@@ -11,15 +11,15 @@ urlpatterns = [
          views.base_view,
          name='base_view'
          ),
-    path('movies/',
+    path('movies',
          views.MovieViewSet.as_view({'get': 'list'}),
          name='movies'
          ),
-    path('book_seat/',
+    path('book_seat',
          views.SeatViewSet.as_view({'get': 'list'}),
          name='book_seat'
          ),
-    path('booking_history/',
+    path('booking_history',
          views.BookingViewSet.as_view({'get': 'list'}),
          name='booking_history'
          ),

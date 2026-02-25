@@ -61,14 +61,7 @@ API usage requires specification of format with '.json', or '.api' for graphical
 
 Api end points are:
 ```
-/api/movies.json/
-/api/seat.json/
-/api/bookings.json/
-```
-
-For interactive view:
-```
-/api/movies.api/
-/api/seat.api/
-/api/bookings.api/
+/api/movies/
+/api/seat/
+/api/bookings/
 ```

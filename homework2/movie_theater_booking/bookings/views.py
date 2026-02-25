@@ -34,7 +34,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
 
     # Template used by view set
     template_name = 'bookings/movie_list.html'
@@ -52,7 +52,7 @@ class SeatViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
 
     # Template used by view set
     template_name = 'bookings/seat_booking.html'
@@ -117,7 +117,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, TemplateHTMLRenderer, BrowsableAPIRenderer]
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
 
     # Template used by view set
     template_name = 'bookings/booking_history.html'

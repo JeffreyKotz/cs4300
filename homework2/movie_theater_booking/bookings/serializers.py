@@ -30,9 +30,9 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
     """Serializer for Bookings converting to JSON format
     """
 
-    movie = MovieSerializer(many=False)
+    # movie = MovieSerializer(many=False)
 
-    seat = SeatSerializer(many=False)
+    # seat = SeatSerializer(many=False)
 
     class Meta:
         model = Booking
