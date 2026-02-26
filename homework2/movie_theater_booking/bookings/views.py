@@ -34,7 +34,10 @@ class MovieViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
+    renderer_classes = [JSONRenderer,
+                        BrowsableAPIRenderer,
+                        TemplateHTMLRenderer,
+                        ]
 
     # Template used by view set
     template_name = 'bookings/movie_list.html'
@@ -52,59 +55,69 @@ class SeatViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
+    renderer_classes = [JSONRenderer,
+                        BrowsableAPIRenderer,
+                        TemplateHTMLRenderer,
+                        ]
 
     # Template used by view set
     template_name = 'bookings/seat_booking.html'
 
     # it is a GET operation, applied to all seats so detail=False
     @action(detail=False, methods=["GET"])
-    def available_seats(self, request) -> Response:
+    def available_seats(self, request, format=None):
         """Find all seats available
 
         Args:
             request (HttpRequest): request given for available seats
+            format: format of page (eg. .html, .json, .api)
 
         Returns:
             Response: response including all available seats Serialized as JSON
         """
         available_seats = Seat.objects.filter(booking_status=False)
+        
+        seralizer = self.get_serializer(available_seats, many=True)
+        response = Response(seralizer.data)
 
-        # if the query can be paginated, reutnr paginated response
-        page = self.paginate_queryset(available_seats)
-        if page is not None:
-            # page exists. serialize page
-            seralizer = self.get_serializer(page, many=True)
-            response = self.get_paginated_response(seralizer.data)
-        else:
-            # Else return non-paginated response
-            serializer = self.get_serializer(available_seats, many=True)
-            response = Response(serializer.data)
+        # if the query can be paginated, return paginated response
+        # page = self.paginate_queryset(available_seats)
+        # if page is not None:
+        #     # page exists. serialize page
+        #     seralizer = self.get_serializer(page, many=True)
+        #     response = self.get_paginated_response(seralizer.data)
+        # else:
+        #     # Else return non-paginated response
+        #     serializer = self.get_serializer(available_seats, many=True)
+        #     response = Response(serializer.data)
         return response
 
-    # Book a seat, detail=True as we refer to a single seat
-    @action(detail=True, methods=['GET'])
-    def book_seat(self, request, pk=None):
-        """book a seat of a given key
+    @action(detail=False, methods=['GET'])
+    def book_seat(self, request, format=None):
+        """Provide all information needed to book a seat
 
         Args:
             request (HttpRequest): the request given to book the seat
-            pk (int, optional): primary key of the seat. Defaults to None.
+            format: format of page (eg. .html, .json, .api)
 
         Returns:
-            Response: indicating whether seat was booked or not
+            Response: information needed to book seat (movies, available seats)
         """
-        seat = self.get_object()
-        if not seat.booking_status:
-            seat.booking_status = True
-            response = Response(data={'status': 'seat booked'},
-                                status=status.HTTP_200_OK,
-                                )
-            seat.save()
-        else:
-            response = Response(data={'status': 'seat unavailable'},
-                                status=status.HTTP_400_BAD_REQUEST,
-                                )
+        movies = Movie.objects.all()  # all movies
+        seats = self.available_seats(request)  # all available seats
+
+        print("##########################")
+        print(seats.render())
+        print("##########################")
+
+        # build response
+        response = Response(data={
+                             'movies': movies,
+                             'seats': seats,
+                             },
+
+                            status=status.HTTP_200_OK,
+                            )
 
         return response
 
@@ -117,13 +130,16 @@ class BookingViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     # Specify to only use JSON and Template renderer
-    renderer_classes = [JSONRenderer, BrowsableAPIRenderer, TemplateHTMLRenderer]
+    renderer_classes = [JSONRenderer,
+                        BrowsableAPIRenderer,
+                        TemplateHTMLRenderer,
+                        ]
 
     # Template used by view set
     template_name = 'bookings/booking_history.html'
 
     @action(detail=False, methods=["GET"])
-    def booking_history(self, request):
+    def booking_history(self, request, format=None):
         """Obtain all existing bookings
 
         Args:
@@ -132,6 +148,8 @@ class BookingViewSet(viewsets.ModelViewSet):
         Returns:
             Response: Response of all past bookings
         """
+
+        # list all bookings
         return self.list(request)
 
     def create(self, request):

@@ -16,11 +16,11 @@ urlpatterns = [
          name='movies'
          ),
     path('book_seat',
-         views.SeatViewSet.as_view({'get': 'list'}),
+         views.SeatViewSet.as_view({'get': 'book_seat'}),
          name='book_seat'
          ),
     path('booking_history',
-         views.BookingViewSet.as_view({'get': 'list'}),
+         views.BookingViewSet.as_view({'get': 'booking_history'}),
          name='booking_history'
          ),
 ]

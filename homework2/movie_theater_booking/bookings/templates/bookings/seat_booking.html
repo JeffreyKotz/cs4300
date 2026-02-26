@@ -1,3 +1,27 @@
-{% block title %} Book Seat {% endblock %}
+{% extends 'bookings/base.html' %}
+
+{% block title %} <h1> Book Seat </h1> {% endblock %}
 {% block content %}
+<form action="{% url 'bookings:book_seat' %}.html" method="post"> 
+    {% csrf_token %}
+    <fieldset>
+
+        <select>
+            {% for movie in movies %}
+            <option> Movie: {{ movie }} </option>
+            {% endfor %}
+        </select>
+
+        <p> {{seats}} </p>
+        
+        <select>
+            
+            {% for seat in seats.s %}
+            <option> Seat: {{ seat.seat_number }} </option>
+            {% endfor %}
+        </select>
+        
+    </fieldset>
+    <input type="submit" value="Book">
+</form>
 {% endblock %}
