@@ -12,7 +12,7 @@
 
         {% block content %}
         <h2 > Available Movies </h2 >
-        <ul class ="list-group ">
+        <ul class ="list-group">
             {% for movie in results%}
                 <li class ="list-group-item ">
                     <h5 >{{ movie.title }} </h5 >
@@ -24,4 +24,4 @@
         </ul >
         {% endblock %}
     </body>
-
+</html>

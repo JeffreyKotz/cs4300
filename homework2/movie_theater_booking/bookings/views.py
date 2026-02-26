@@ -77,19 +77,20 @@ class SeatViewSet(viewsets.ModelViewSet):
         """
         available_seats = Seat.objects.filter(booking_status=False)
         
-        seralizer = self.get_serializer(available_seats, many=True)
-        response = Response(seralizer.data)
+        # seralizer = self.get_serializer(available_seats, many=True)
+        # response = Response(seralizer.data)
 
         # if the query can be paginated, return paginated response
-        # page = self.paginate_queryset(available_seats)
-        # if page is not None:
-        #     # page exists. serialize page
-        #     seralizer = self.get_serializer(page, many=True)
-        #     response = self.get_paginated_response(seralizer.data)
-        # else:
-        #     # Else return non-paginated response
-        #     serializer = self.get_serializer(available_seats, many=True)
-        #     response = Response(serializer.data)
+        page = self.paginate_queryset(available_seats)
+        if page is not None:
+            # page exists. serialize page
+            seralizer = self.get_serializer(page, many=True)
+            response = self.get_paginated_response(seralizer.data)
+        else:
+            # Else return non-paginated response
+            serializer = self.get_serializer(available_seats, many=True)
+            response = Response(serializer.data)
+
         return response
 
     @action(detail=False, methods=['GET'])
@@ -103,12 +104,10 @@ class SeatViewSet(viewsets.ModelViewSet):
         Returns:
             Response: information needed to book seat (movies, available seats)
         """
-        movies = Movie.objects.all()  # all movies
-        seats = self.available_seats(request)  # all available seats
-
-        print("##########################")
-        print(seats.render())
-        print("##########################")
+        # all movies
+        movies = Movie.objects.all()
+        # all available seats
+        seats = self.queryset.filter(booking_status=False)
 
         # build response
         response = Response(data={
@@ -144,13 +143,30 @@ class BookingViewSet(viewsets.ModelViewSet):
 
         Args:
             request (HttpRequest): Request for booking history
+            format: format of page (eg. .html, .json, .api)
 
         Returns:
             Response: Response of all past bookings
         """
 
-        # list all bookings
-        return self.list(request)
+        bookings = self.queryset
+        data = {'results': []}
+
+        # Form data for response using
+        # movie title
+        # seat number
+        # booking date
+        for booking in bookings:
+            data['results'].append(
+                {
+                    'movie_title': booking.movie.title,
+                    'seat_number': booking.seat.seat_number,
+                    'booking_date': booking.booking_date,
+                })
+
+        response = Response(data=data, status=status.HTTP_200_OK)
+
+        return response
 
     def create(self, request):
         """Create a booking, overridden from ViewSet create method

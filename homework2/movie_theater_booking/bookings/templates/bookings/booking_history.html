@@ -6,18 +6,21 @@
         <title>Bookings</title>
     </head>
     <body>
-    {% block title %} 
-    <h1> Booking History </h1>
-    {% endblock %}
+        {% block title %} 
+        <h1> Booking History </h1>
+        {% endblock %}
 
-    {% block content %}
-    {% for booking in results %}
-        <li class ="list-group-item ">
-            <p> Movie: {{ booking.movie }} </p>
-            <p> Seat: {{ booking.seat.seat_number }} </p>
-            
-        </li >
-    {% endfor %}
-    {% endblock %}
+        {% block content %}
+        <ul class ="list-group">
+        {% for booking in results %}
+            <li class ="list-group-item ">
+                <h2> Booking For <h2>
+                <h5> Movie: {{ booking.movie_title }} </h5>
+                <h5> Seat: {{ booking.seat_number }} </h5>
+                <h5> Time: {{ booking.booking_date}} </h5>
+            </li>
+        {% endfor %}
+        </ul>
+        {% endblock %}
     </body> 
 </html>
