@@ -76,9 +76,6 @@ class SeatViewSet(viewsets.ModelViewSet):
             Response: response including all available seats Serialized as JSON
         """
         available_seats = Seat.objects.filter(booking_status=False)
-        
-        # seralizer = self.get_serializer(available_seats, many=True)
-        # response = Response(seralizer.data)
 
         # if the query can be paginated, return paginated response
         page = self.paginate_queryset(available_seats)
@@ -108,13 +105,16 @@ class SeatViewSet(viewsets.ModelViewSet):
         movies = Movie.objects.all()
         # all available seats
         seats = self.queryset.filter(booking_status=False)
+        
+        # Serialize the movies and seaats for proper form usage
+        movie_serializer = MovieSerializer(movies, many=True, context={'request': request})
+        seat_serializer = SeatSerializer(seats, many=True, context={'request': request})
 
-        # build response
+        # form response
         response = Response(data={
-                             'movies': movies,
-                             'seats': seats,
-                             },
-
+                                'movies': movie_serializer.data,
+                                'seats': seat_serializer.data,
+                            },
                             status=status.HTTP_200_OK,
                             )
 
@@ -134,8 +134,7 @@ class BookingViewSet(viewsets.ModelViewSet):
                         TemplateHTMLRenderer,
                         ]
 
-    # Template used by view set
-    template_name = 'bookings/booking_history.html'
+    # Would set template here but different views go to different pages
 
     @action(detail=False, methods=["GET"])
     def booking_history(self, request, format=None):
@@ -149,7 +148,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             Response: Response of all past bookings
         """
 
-        bookings = self.queryset
+        bookings = self.queryset.all()
         data = {'results': []}
 
         # Form data for response using
@@ -164,23 +163,27 @@ class BookingViewSet(viewsets.ModelViewSet):
                     'booking_date': booking.booking_date,
                 })
 
-        response = Response(data=data, status=status.HTTP_200_OK)
+        response = Response(data=data,
+                            status=status.HTTP_200_OK,
+                            template_name='bookings/booking_history.html')
 
         return response
 
-    def create(self, request):
+    def create(self, request, format=None):
         """Create a booking, overridden from ViewSet create method
 
         Args:
             request (HttpRequest): request given with information on booking
                                    to create
+            format: format of page (eg. .html, .json, .api)
 
         Returns:
             Response: _description_
         """
 
         serializer = BookingSerializer(data=request.data)
-        response = Response(status=status.HTTP_400_BAD_REQUEST)
+        response = Response(status=status.HTTP_400_BAD_REQUEST,
+                            template_name='bookings/base.html')
 
         # Check if valid request was made
         if serializer.is_valid():
@@ -188,6 +191,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             movie = serializer.validated_data['movie']
             seat = serializer.validated_data['seat']
             booking_date = serializer.validated_data['booking_date']
+            
 
             # If the release date preceeds the current time, then the movie
             # can be booked
@@ -203,19 +207,26 @@ class BookingViewSet(viewsets.ModelViewSet):
 
                     # Booking is successfully made, call superclass create
                     # and give it's returned response as the response
-                    response = super(BookingViewSet, self).create(request)
+                    data = super(BookingViewSet, self).create(request).data
+                    
+                    response = Response(data=data,
+                                        status=status.HTTP_201_CREATED,
+                                        template_name='bookings/base.html'
+                                        )
 
                 else:
-                    response = Response(data={'status': 'Seat Unavailable'},
+                    response = Response(data={'Error': 'Seat Unavailable'},
                                         status=status.HTTP_400_BAD_REQUEST,
+                                        template_name='bookings/base.html'
                                         )
             else:
-                response = Response(data={'status':
+                response = Response(data={'Error':
                                           f'Booking on {booking_date} is '
                                           f'before movie is released '
                                           f'on {movie.release_date}'
                                           },
                                     status=status.HTTP_400_BAD_REQUEST,
+                                    template_name='bookings/base.html'
                                     )
         return response
 

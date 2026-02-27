@@ -7,32 +7,33 @@
     </head>
     <body>
         {% block title %} <h1> Book Seat </h1> {% endblock %}
+
+
         {% block content %}
-        <form action="{% url 'bookings:book_seat' %}.html" method="post" class="form-select-lg mb-3"> 
+        <a href ="../" class ="btn btn-primary "> Return </a>
+
+        <form action="{% url 'bookings:make_booking' %}.html" method="post" class="form-select form-select-lg mb-3">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="movie" class="form-label">Movie</label>
-                <select id="movie">
+                <select id="movie" name="movie">
                     {% for movie in movies %}
-                    <option name="movie"> Movie: {{ movie }} </option>
+                    <option value="{{ movie.url }}"> {{ movie.title }} </option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="seat" class="form-label">Seat #</label>
-                <select id='seat'>
+                <select id='seat' name="seat">
                     {% for seat in seats %}
-                    <option name="seat"> {{ seat.seat_number }} </option>
+                    <option value="{{ seat.url }}"> Seat #{{ seat.seat_number }} </option>
                     {% endfor %}
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="date" class="form-label">Date</label>
-                <input type="date" id="date" value="booking_date">
+                <input type="datetime-local" name="booking_date">
             </div>
-            <input type="submit" value="booking" class="btn btn-primary">
+            <input type="submit" class="btn btn-primary">
         </form>
         {% endblock %}
     </body>

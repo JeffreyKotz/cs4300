@@ -9,16 +9,17 @@
         {% block title %} 
         <h1> Movie List </h1>
         {% endblock %}
-
+        
         {% block content %}
-        <h2 > Available Movies </h2 >
+        <a href ="../" class ="btn btn-primary "> Return </a>
+
+        <h2 > Available Movies </h2>
         <ul class ="list-group">
             {% for movie in results%}
                 <li class ="list-group-item ">
-                    <h5 >{{ movie.title }} </h5 >
-                    <p>{{ movie.description }} </p>
-                    <a href ="{% url 'bookings:book_seat' %}" class ="btn btn-primary ">
-                        Book Now </a>
+                    <h5> {{ movie.title }} </h5>
+                    <p> Release Date: {{ movie.release_date }} </p>
+                    <p> Description: {{ movie.description }} </p>
                 </li >
             {% endfor %}
         </ul >

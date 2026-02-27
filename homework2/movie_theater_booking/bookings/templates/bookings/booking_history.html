@@ -11,13 +11,14 @@
         {% endblock %}
 
         {% block content %}
+        <a href ="../" class ="btn btn-primary "> Return </a>
+        
         <ul class ="list-group">
         {% for booking in results %}
             <li class ="list-group-item ">
-                <h2> Booking For <h2>
                 <h5> Movie: {{ booking.movie_title }} </h5>
-                <h5> Seat: {{ booking.seat_number }} </h5>
-                <h5> Time: {{ booking.booking_date}} </h5>
+                <h5> Seat #{{ booking.seat_number }} </h5>
+                <h5> Time: {{ booking.booking_date }} </h5>
             </li>
         {% endfor %}
         </ul>
