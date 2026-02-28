@@ -12,6 +12,8 @@
 
         {% block content %}
         <a href ="../" class ="btn btn-primary "> Return </a>
+
+        {% if error %} <h3> {{ error }} </h3> {% endif %} 
         
         <ul class ="list-group">
         {% for booking in results %}

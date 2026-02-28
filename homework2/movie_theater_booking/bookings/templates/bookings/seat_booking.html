@@ -12,6 +12,11 @@
         {% block content %}
         <a href ="../" class ="btn btn-primary "> Return </a>
 
+
+        {% if error %} 
+        <h2> {{ error }} </h2>
+        
+        {% else %}
         <form action="{% url 'bookings:make_booking' %}.html" method="post" class="form-select form-select-lg mb-3">
             {% csrf_token %}
             <div class="mb-3">
@@ -35,6 +40,8 @@
             </div>
             <input type="submit" class="btn btn-primary">
         </form>
+
+        {% endif %}
         {% endblock %}
     </body>
 </html>

@@ -1,4 +1,4 @@
-## project structure
+# Project Structure
 ```
 cs4300/
 |-- homework2/
@@ -26,29 +26,29 @@ Contains the main implementation of the application and the database.
 - **movie_theater_booking**: sub directory containing website configuration
 - **bookings**: bookings directory application defining models, views, and tests used by the website
 
-## Setup
+# Setup
 
-#### Requirements
+### Requirements
 
 Python 3.12.3
 
-### Step 1. Create Virtual Environment
+## Step 1. Create Virtual Environment
 ```
 python3 -m venv venv_name --system-site-packages
 ```
 
-### Step 2. Activate Virtual Environment
+## Step 2. Activate Virtual Environment
 ```
 source venv_name/bin/activate
 ```
 
-### Step 3. Install Dependencies From requirements.txt
+## Step 3. Install Dependencies From requirements.txt
 From cs4300/homework2/ run pip install on the requirements file to install all required dependencies inside.
 ```
 pip install -r requirements.txt
 ```
 
-## How To Run Application
+# How To Run Application
 
 From cs4300/homework2/movie_theater_booking
 
@@ -56,7 +56,7 @@ From cs4300/homework2/movie_theater_booking
 python manage.py runserver 0.0.0.0:3000
 ```
 
-## How to use API
+# How to use API
 Access the API through the following end points
 
 Api end points are:

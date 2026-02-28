@@ -28,7 +28,6 @@ urlpatterns = [
           ),
 ]
 
-
 # The app will only be viewed through html
 urlpatterns = format_suffix_patterns(urlpatterns,
                                      allowed=['html'])

@@ -3,7 +3,6 @@ By Jeffrey Kotz - 2/20/2026
 This file defines Views for the Movie Theater Booking App
 """
 
-# from django.shortcuts import render
 from rest_framework import permissions, viewsets, status
 from rest_framework.decorators import action, renderer_classes
 from rest_framework.response import Response
@@ -45,6 +44,35 @@ class MovieViewSet(viewsets.ModelViewSet):
     # As MovieViewSet is a derived class from ModelViewSet it implement: list,
     # create, retrieve, update, partial_update, and destroy by default
     # No additional work is needed CRUD operations are built in
+
+    def list(self, request, format=None):
+        """List all Movies, overriden for providing error messages
+
+        Args:
+            request (HttpRequest): request given for list of movies
+            format: format of page (eg. .html, .json, .api)
+
+        Returns:
+            Response: response of serialized movie data
+        """
+
+        movies = self.queryset.all()
+        serializer = self.serializer_class(movies,
+                                           many=True,
+                                           context={'request': request}
+                                           )
+
+        data = {
+            'results': serializer.data,
+            'error': '',
+        }
+
+        if len(movies) == 0:
+            data['error'] = 'No movies available.'
+
+        response = Response(data=data, status=status.HTTP_200_OK)
+
+        return response
 
 
 class SeatViewSet(viewsets.ModelViewSet):
@@ -110,13 +138,24 @@ class SeatViewSet(viewsets.ModelViewSet):
         movie_serializer = MovieSerializer(movies, many=True, context={'request': request})
         seat_serializer = SeatSerializer(seats, many=True, context={'request': request})
 
+        data = {
+            'movies': movie_serializer.data,
+            'seats': seat_serializer.data,
+            'error': ''
+        }
+
+        if len(seats) == 0:
+            data['error'] = 'No seats available.'
+        elif len(movies) == 0:
+            data['error'] = 'No movies available.'
+
         # form response
-        response = Response(data={
-                                'movies': movie_serializer.data,
-                                'seats': seat_serializer.data,
-                            },
+        response = Response(data=data,
                             status=status.HTTP_200_OK,
                             )
+    
+        
+            
 
         return response
 
@@ -149,7 +188,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         """
 
         bookings = self.queryset.all()
-        data = {'results': []}
+        data = {'results': [], 'error': ''}
 
         # Form data for response using
         # movie title
@@ -162,6 +201,9 @@ class BookingViewSet(viewsets.ModelViewSet):
                     'seat_number': booking.seat.seat_number,
                     'booking_date': booking.booking_date,
                 })
+
+        if len(data['results']) == 0:
+            data['error'] = 'No bookings available.'
 
         response = Response(data=data,
                             status=status.HTTP_200_OK,
@@ -187,15 +229,14 @@ class BookingViewSet(viewsets.ModelViewSet):
 
         # Check if valid request was made
         if serializer.is_valid():
-
             movie = serializer.validated_data['movie']
             seat = serializer.validated_data['seat']
             booking_date = serializer.validated_data['booking_date']
-            
 
-            # If the release date preceeds the current time, then the movie
-            # can be booked
-            if movie.release_date < booking_date:
+            # If release date is after the booking date
+            # then the booking is impossible, you cannot see
+            # unreleased movies
+            if movie.release_date <= booking_date:
 
                 # This is entirely unecessary since seats have a one to one
                 # relationship with bookings, but I left it here just in case
@@ -208,19 +249,18 @@ class BookingViewSet(viewsets.ModelViewSet):
                     # Booking is successfully made, call superclass create
                     # and give it's returned response as the response
                     data = super(BookingViewSet, self).create(request).data
-                    
                     response = Response(data=data,
                                         status=status.HTTP_201_CREATED,
                                         template_name='bookings/base.html'
                                         )
 
                 else:
-                    response = Response(data={'Error': 'Seat Unavailable'},
+                    response = Response(data={'error': 'Seat Unavailable'},
                                         status=status.HTTP_400_BAD_REQUEST,
                                         template_name='bookings/base.html'
                                         )
             else:
-                response = Response(data={'Error':
+                response = Response(data={'error':
                                           f'Booking on {booking_date} is '
                                           f'before movie is released '
                                           f'on {movie.release_date}'

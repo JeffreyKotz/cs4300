@@ -17,9 +17,10 @@
         <ul class ="list-group">
             {% for movie in results%}
                 <li class ="list-group-item ">
-                    <h5> {{ movie.title }} </h5>
-                    <p> Release Date: {{ movie.release_date }} </p>
-                    <p> Description: {{ movie.description }} </p>
+                    <h4> {{ movie.title }} </h5>
+                    <h5> Release Date: {{ movie.release_date }} </h6>
+                    <h5> Duration: {{ movie.duration }} </h6>
+                    <h5> Description: {{ movie.description }} </h6>
                 </li >
             {% endfor %}
         </ul >
