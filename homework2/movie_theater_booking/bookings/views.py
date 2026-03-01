@@ -106,16 +106,8 @@ class SeatViewSet(viewsets.ModelViewSet):
         """
         available_seats = Seat.objects.filter(booking_status=False)
 
-        # if the query can be paginated, return paginated response
-        page = self.paginate_queryset(available_seats)
-        if page is not None:
-            # page exists. serialize page
-            seralizer = self.get_serializer(page, many=True)
-            response = self.get_paginated_response(seralizer.data)
-        else:
-            # Else return non-paginated response
-            serializer = self.get_serializer(available_seats, many=True)
-            response = Response(serializer.data)
+        serializer = self.get_serializer(available_seats, many=True)
+        response = Response(serializer.data, status=status.HTTP_200_OK)
 
         return response
 
@@ -135,7 +127,7 @@ class SeatViewSet(viewsets.ModelViewSet):
         # all available seats
         seats = self.queryset.filter(booking_status=False)
         users = User.objects.all()
-        
+
         # Serialize the movies and seaats for proper form usage
         movie_serializer = MovieSerializer(movies,
                                            many=True,
@@ -151,7 +143,7 @@ class SeatViewSet(viewsets.ModelViewSet):
                 'pk': user.pk,
             })
 
-        #
+        # form data necessary for booking to be made
         data = {
             'movies': movie_serializer.data,
             'seats': seat_serializer.data,
