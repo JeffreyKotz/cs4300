@@ -12,6 +12,7 @@ from rest_framework.renderers import (TemplateHTMLRenderer,
                                       )
 
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.models import User
 
 from bookings.models import Movie, Seat, Booking
 from bookings.serializers import (MovieSerializer,
@@ -133,15 +134,29 @@ class SeatViewSet(viewsets.ModelViewSet):
         movies = Movie.objects.all()
         # all available seats
         seats = self.queryset.filter(booking_status=False)
+        users = User.objects.all()
         
         # Serialize the movies and seaats for proper form usage
-        movie_serializer = MovieSerializer(movies, many=True, context={'request': request})
-        seat_serializer = SeatSerializer(seats, many=True, context={'request': request})
+        movie_serializer = MovieSerializer(movies,
+                                           many=True,
+                                           context={'request': request})
+        seat_serializer = SeatSerializer(seats,
+                                         many=True,
+                                         context={'request': request})
 
+        user_data = []
+        for user in users:
+            user_data.append({
+                'username': user.username,
+                'pk': user.pk,
+            })
+
+        #
         data = {
             'movies': movie_serializer.data,
             'seats': seat_serializer.data,
-            'error': ''
+            'users': user_data,
+            'error': '',
         }
 
         if len(seats) == 0:
@@ -153,9 +168,6 @@ class SeatViewSet(viewsets.ModelViewSet):
         response = Response(data=data,
                             status=status.HTTP_200_OK,
                             )
-    
-        
-            
 
         return response
 
@@ -229,6 +241,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 
         # Check if valid request was made
         if serializer.is_valid():
+            # retrieve fields given for validation checks
             movie = serializer.validated_data['movie']
             seat = serializer.validated_data['seat']
             booking_date = serializer.validated_data['booking_date']

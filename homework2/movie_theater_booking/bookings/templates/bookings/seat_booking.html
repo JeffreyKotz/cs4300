@@ -20,6 +20,14 @@
         <form action="{% url 'bookings:make_booking' %}.html" method="post" class="form-select form-select-lg mb-3">
             {% csrf_token %}
             <div class="mb-3">
+                <select id="user" name="user">
+                    {% for user in users %}
+                    <option value="{{ user.pk }}"> User: {{ user.username }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <select id="movie" name="movie">
                     {% for movie in movies %}
                     <option value="{{ movie.url }}"> {{ movie.title }} </option>

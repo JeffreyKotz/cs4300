@@ -5,6 +5,7 @@ Application.
 """
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Movie(models.Model):
@@ -52,6 +53,9 @@ class Booking(models.Model):
     seat = models.OneToOneField(Seat, on_delete=models.CASCADE)
     booking_date = models.DateTimeField("booking date")
 
+    # Use primary key to track user of booking
+    user = models.IntegerField(default=0)
+
     def __str__(self) -> str:
         """Return human readable representation of the booking
 
@@ -60,4 +64,5 @@ class Booking(models.Model):
         """
         return (f"Booking for movie: {self.movie}, "
                 f"in {self.seat}, "
-                f"on {self.booking_date}")
+                f"on {self.booking_date}"
+                f"for {self.user}")
