@@ -1,0 +1,22 @@
+<testsuite name="features.create-booking.Create Booking For Movie" tests="1" errors="1" failures="0" skipped="0" time="0.017215" timestamp="2026-03-02T20:57:14.226244" hostname="d0abc473e8ef"><testcase classname="features.create-booking.Create Booking For Movie" name="Use Create Booking Form To Create A Booking" status="error" time="0.017215"><error type="NoneType" message="None">
+<![CDATA[
+Failing step: Then the booking is created ... undefined in 0.000s
+Location: tests/features/create-booking.feature:7
+None]]>
+</error><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: Use Create Booking Form To Create A Booking
+    Given I have a movie and available seat ... passed in 0.002s
+    And I have navigated to the Book Seat Page ... passed in 0.015s
+    When I submit a movie, available seat, and booking date ... passed in 0.001s
+    Then the booking is created ... undefined in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+None
+
+]]>
+</system-out></testcase></testsuite>

@@ -1,0 +1,29 @@
+{% extends 'bookings/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bookings</title>
+    </head>
+    <body>
+        {% block title %} 
+        <h1> Booking History </h1>
+        {% endblock %}
+
+        {% block content %}
+        <a href ="/" class ="btn btn-primary" id="return"> Return </a>
+
+        {% if error %} <h3> {{ error }} </h3> {% endif %} 
+        
+        <ul class ="list-group">
+        {% for booking in results %}
+            <li class ="list-group-item ">
+                <h5> Movie: {{ booking.movie_title }} </h5>
+                <h5> Seat #{{ booking.seat_number }} </h5>
+                <h5> Time: {{ booking.booking_date }} </h5>
+            </li>
+        {% endfor %}
+        </ul>
+        {% endblock %}
+    </body> 
+</html>

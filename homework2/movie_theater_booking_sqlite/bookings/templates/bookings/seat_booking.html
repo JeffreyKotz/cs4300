@@ -1,0 +1,55 @@
+{% extends 'bookings/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Book Seat</title>
+    </head>
+    <body>
+        {% block title %} <h1> Book Seat </h1> {% endblock %}
+
+
+        {% block content %}
+        <a href ="/" class ="btn btn-primary" id="return"> Return </a>
+
+
+        {% if error %} 
+        <h2> {{ error }} </h2>
+        
+        {% else %}
+        <form action="{% url 'bookings:make_booking' %}.html" method="post" class="form-select form-select-lg mb-3" id="booking-form">
+            {% csrf_token %}
+            <div class="mb-3">
+                <select id="user" name="user">
+                    {% for user in users %}
+                    <option value="{{ user.pk }}"> User: {{ user.username }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <select id="movie" name="movie">
+                    {% for movie in movies %}
+                    <option value="{{ movie.url }}"> {{ movie.title }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <select id='seat' name="seat">
+                    {% for seat in seats %}
+                    <option value="{{ seat.url }}"> Seat #{{ seat.seat_number }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <input type="datetime-local" name="booking_date" id="date">
+            </div>
+            <input type="submit" class="btn btn-primary">
+        </form>
+
+        {% endif %}
+        {% endblock %}
+    </body>
+</html>

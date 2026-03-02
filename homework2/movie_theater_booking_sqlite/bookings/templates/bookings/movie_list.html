@@ -1,0 +1,29 @@
+{% extends 'bookings/base.html' %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Movie List</title>
+    </head>
+    <body>
+        {% block title %} 
+        <h1> Movie List </h1>
+        {% endblock %}
+        
+        {% block content %}
+        <a href ="/" class ="btn btn-primary" id="return"> Return </a>
+
+        <h2 > Available Movies </h2>
+        <ul class ="list-group" id='movie-list'>
+            {% for movie in results%}
+                <li class ="list-group-item ">
+                    <h4> {{ movie.title }} </h5>
+                    <h5> Release Date: {{ movie.release_date }} </h6>
+                    <h5> Duration: {{ movie.duration }} </h6>
+                    <h5> Description: {{ movie.description }} </h6>
+                </li >
+            {% endfor %}
+        </ul >
+        {% endblock %}
+    </body>
+</html>
