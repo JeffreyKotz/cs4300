@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--fd&=%#ill-0bc$#n=ch&4)h^#a5c=-xrf4g%kpt5_34ig_qhy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
 try:
     import behave_django
 except ImportError:
-    print("Behave not available. Probably running in production.")
+    print("Behave not available. Running in production.")
 else:
     INSTALLED_APPS += ["behave_django"]
 
