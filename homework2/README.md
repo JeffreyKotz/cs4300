@@ -1,5 +1,6 @@
 # Links
 Github Repository: https://github.com/JeffreyKotz/cs4300
+
 Render Webpage: https://movie-theater-booking-e2if.onrender.com
 
 # Project Structure
@@ -81,12 +82,12 @@ python3 manage.py runserver 0.0.0.0:3000
 # How to Run Tests
 From `cs4300/homework/movie_theater_booking_sqlite`
 
-To execute integration and unit tests run
+To execute integration and unit tests use:
 ```
 python3 manage.py test
 ```
 
-To execute behave tests
+To execute behave tests use:
 ```
 python3 manage.py behave
 ```
