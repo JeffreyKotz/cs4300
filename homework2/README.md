@@ -61,7 +61,7 @@ source venv_name/bin/activate
 ```
 
 ## Step 3. Install Dependencies From requirements.txt
-From `cs4300/homework2/` run pip install on the requirements file to install all required dependencies inside.
+From `cs4300/homework2/movie_theater_booking` run pip install on the requirements file to install all required dependencies inside.
 ```
 pip install -r requirements.txt
 ```
@@ -72,6 +72,7 @@ From `cs4300/homework2/movie_theater_booking`
 
 ```
 python3 manage.py runserver 0.0.0.0:3000
+python -m gunicorn movie_theater_booking.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:3000
 ```
 
 # How to Run Tests
