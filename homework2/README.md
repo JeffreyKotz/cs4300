@@ -8,7 +8,12 @@ cs4300/
 |   |   |-- manage.py
 |   |   |-- db.sqlite3
 |   |   |-- bookings/
+|   |   |   |-- templates/bookings/
 |   |   |-- movie_theater_booking/
+|   |   |-- tests/
+|   |   |   |-- features/
+|   |   |   |-- steps/
+|   |   |   |   |-- pageobjects/
 ```
 
 ### ../cs4300/homework2/
@@ -25,6 +30,19 @@ Contains the main implementation of the application and the database.
 - **db.sqlite3**: database used by the website
 - **movie_theater_booking**: sub directory containing website configuration
 - **bookings**: bookings directory application defining models, views, and tests used by the website
+
+### ../movie_theater_booking/bookings/
+The main application where a majority of the funcionality is defined along with styling and pages
+
+- **templates/bookings**: directory where html templates used by application are defined
+- **urls.py**: defines the urls which views can be access through
+- **tests.py**: defines integration and unit tests for the application and api
+- **views.py**: defines viewsets used by application
+- **models.py**: defines the main models used by application
+- **serializers.py**: defines the serializers used to convert model instances to JSON
+
+### ../movie_theater_booking/tests/
+The Tests directory defines the behave tests, where the features are defined in the Gherkin formate in the features subdirectory, and the tests are implemented in the steps directory
 
 # Setup
 
@@ -43,17 +61,30 @@ source venv_name/bin/activate
 ```
 
 ## Step 3. Install Dependencies From requirements.txt
-From cs4300/homework2/ run pip install on the requirements file to install all required dependencies inside.
+From `cs4300/homework2/` run pip install on the requirements file to install all required dependencies inside.
 ```
 pip install -r requirements.txt
 ```
 
 # How To Run Application
 
-From cs4300/homework2/movie_theater_booking
+From `cs4300/homework2/movie_theater_booking`
 
 ```
-python manage.py runserver 0.0.0.0:3000
+python3 manage.py runserver 0.0.0.0:3000
+```
+
+# How to Run Tests
+From `cs4300/homework/movie_theater_booking`
+
+To execute integration and unit tests run
+```
+python3 manage.py test
+```
+
+To execute behave tests
+```
+python3 manage.py behave
 ```
 
 # How to use API

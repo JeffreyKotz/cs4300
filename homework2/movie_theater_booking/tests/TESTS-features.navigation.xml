@@ -1,20 +1,20 @@
-<testsuite name="features.navigation.Navigate Booking App" tests="1" errors="0" failures="0" skipped="0" time="0.042885" timestamp="2026-03-02T21:00:25.017280" hostname="d0abc473e8ef"><testcase classname="features.navigation.Navigate Booking App" name="Navigate To And From The Landing Page" status="passed" time="0.042885"><system-out>
+<testsuite name="features.navigation.Navigate Booking App" tests="1" errors="0" failures="0" skipped="0" time="0.061632" timestamp="2026-03-02T21:13:32.300432" hostname="d0abc473e8ef"><testcase classname="features.navigation.Navigate Booking App" name="Navigate To And From The Landing Page" status="passed" time="0.061632"><system-out>
 <![CDATA[
 @scenario.begin
   Scenario: Navigate To And From The Landing Page
-    Given I am at the Home page ... passed in 0.006s
-    When I click the "Movies" button ... passed in 0.005s
-    Then I will be brought to the "Movies" page ... passed in 0.001s
+    Given I am at the Home page ... passed in 0.016s
+    When I click the "Movies" button ... passed in 0.006s
+    Then I will be brought to the "Movies" page ... passed in 0.003s
     When I click the "Return" button ... passed in 0.003s
     Then I will be brought to the "Home" page ... passed in 0.001s
-    When I click the "Book Seat" button ... passed in 0.006s
-    Then I will be brought to the "Book Seat" page ... passed in 0.003s
-    When I click the "Return" button ... passed in 0.003s
-    Then I will be brought to the "Home" page ... passed in 0.002s
+    When I click the "Book Seat" button ... passed in 0.008s
+    Then I will be brought to the "Book Seat" page ... passed in 0.005s
+    When I click the "Return" button ... passed in 0.005s
+    Then I will be brought to the "Home" page ... passed in 0.001s
     When I click the "Booking History" button ... passed in 0.005s
-    Then I will be brought to the "Booking History" page ... passed in 0.002s
+    Then I will be brought to the "Booking History" page ... passed in 0.003s
     When I click the "Return" button ... passed in 0.003s
-    Then I will be brought to the "Home" page ... passed in 0.002s
+    Then I will be brought to the "Home" page ... passed in 0.001s
 
 @scenario.end
 --------------------------------------------------------------------------------
