@@ -297,9 +297,9 @@ class SeatViewSetTests(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.data['movies'], queryset_movies)
-        self.assertQuerysetEqual(response.data['seats'], queryset_seats)
-        self.assertQuerysetEqual(response.data['users'], queryset_users)
+        self.assertQuerySetEqual(response.data['movies'], queryset_movies)
+        self.assertQuerySetEqual(response.data['seats'], queryset_seats)
+        self.assertQuerySetEqual(response.data['users'], queryset_users)
 
 
 class BookingViewSetTests(APITestCase):

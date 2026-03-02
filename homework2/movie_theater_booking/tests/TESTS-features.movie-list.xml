@@ -1,0 +1,16 @@
+<testsuite name="features.movie-list.View Available Movies" tests="1" errors="0" failures="0" skipped="0" time="0.010408" timestamp="2026-03-02T20:15:01.290402" hostname="d0abc473e8ef"><testcase classname="features.movie-list.View Available Movies" name="On The Movies Page, Movies Are Displayed" status="passed" time="0.010408"><system-out>
+<![CDATA[
+@scenario.begin
+  Scenario: On The Movies Page, Movies Are Displayed
+    Given I am on the Movies page ... passed in 0.010s
+    Then I should see a list of available movies ... passed in 0.001s
+
+@scenario.end
+--------------------------------------------------------------------------------
+
+Captured stdout:
+<ul class="list-group" id="movie-list">
+</ul>
+
+]]>
+</system-out></testcase></testsuite>

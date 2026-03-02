@@ -4,21 +4,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Home</title>
+        <title>Movie Theater Booking</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     </head>
     <body>
         {% block title %} 
         <h1> Home </h1>
         {% endblock %}
+        
         {% block content %}
         <h2 > Functions </h2 >
-        <a href ="{% url 'bookings:movies' %}.html" class ="btn btn-primary "> Movies </a>
+        <a href ="{% url 'bookings:movies' %}.html" class ="btn btn-primary" id="movies"> Movies </a>
 
-        <a href ="{% url 'bookings:book_seat' %}.html" class ="btn btn-primary "> Book Seat </a>
+        <a href ="{% url 'bookings:book_seat' %}.html" class ="btn btn-primary" id="book-seat"> Book Seat </a>
 
-        <a href ="{% url 'bookings:booking_history' %}.html" class ="btn btn-primary "> Booking History </a>
+        <a href ="{% url 'bookings:booking_history' %}.html" class ="btn btn-primary" id="booking-history"> Booking History </a>
         {% endblock %}
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     </body>
 </html>

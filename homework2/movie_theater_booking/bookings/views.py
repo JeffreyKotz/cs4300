@@ -4,7 +4,7 @@ This file defines Views for the Movie Theater Booking App
 """
 
 from rest_framework import permissions, viewsets, status
-from rest_framework.decorators import action, renderer_classes
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.renderers import (TemplateHTMLRenderer,
                                       BrowsableAPIRenderer,

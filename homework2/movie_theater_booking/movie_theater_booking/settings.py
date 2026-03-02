@@ -38,9 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'bookings.apps.BookingsConfig',
-    'behave_django'
+    'bookings.apps.BookingsConfig'
 ]
+
+# Try adding behave_django,
+try:
+    import behave_django
+except ImportError:
+    print("Behave not available. Probably running in production.")
+else:
+    INSTALLED_APPS += ["behave_django"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
