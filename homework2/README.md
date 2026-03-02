@@ -61,22 +61,21 @@ source venv_name/bin/activate
 ```
 
 ## Step 3. Install Dependencies From requirements.txt
-From `cs4300/homework2/movie_theater_booking` run pip install on the requirements file to install all required dependencies inside.
+From `cs4300/homework2/movie_theater_booking_sqlite` run pip install on the requirements file to install all required dependencies inside.
 ```
 pip install -r requirements.txt
 ```
 
-# How To Run Application
+# How To Run Application (In Debug)
 
-From `cs4300/homework2/movie_theater_booking`
+From `cs4300/homework2/movie_theater_booking_sqlite`
 
 ```
 python3 manage.py runserver 0.0.0.0:3000
-python -m gunicorn movie_theater_booking.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:3000
 ```
 
 # How to Run Tests
-From `cs4300/homework/movie_theater_booking`
+From `cs4300/homework/movie_theater_booking_sqlite`
 
 To execute integration and unit tests run
 ```
@@ -89,10 +88,9 @@ python3 manage.py behave
 ```
 
 # How to use API
-Access the API through the following end points
-
-Api end points are:
+Access the API through the following end points:
 ```
+/api/
 /api/movies/
 /api/seat/
 /api/bookings/
