@@ -5,13 +5,11 @@ from django.contrib.auth.models import User
 
 import datetime
 
-from rest_framework.test import APIRequestFactory
 from rest_framework.test import APITestCase
 
 from bookings.models import Movie, Seat, Booking
 from bookings.serializers import (MovieSerializer,
                                   SeatSerializer,
-                                  BookingSerializer,
                                   )
 
 # Create your tests here.

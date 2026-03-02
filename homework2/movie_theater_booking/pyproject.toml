@@ -1,0 +1,15 @@
+[project]
+name = "movie-theater-booking"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "behave-django>=1.9.0",
+    "coverage>=7.13.4",
+    "django>=6.0.2",
+    "djangorestframework>=3.16.1",
+]
